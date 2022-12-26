@@ -31,7 +31,7 @@ def ending(number):
     return 'лет'
 
 
-excel_data_df = pandas.read_excel('wine3.xlsx', sheet_name='Лист1', keep_default_na=False)
+excel_data_df = pandas.read_excel('wines_table.xlsx', sheet_name='Лист1', keep_default_na=False)
 wines = excel_data_df.to_dict(orient='records')
 wines_by_cat = {}
 
