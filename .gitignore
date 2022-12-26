@@ -115,6 +115,7 @@ venv.bak/
 .spyderproject
 .spyproject
 index.html
+.replit
 
 # Rope project settings
 .ropeproject
