@@ -1,3 +1,4 @@
+import argparse
 from datetime import date
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -5,7 +6,19 @@ import pandas
 from dateutil.relativedelta import relativedelta
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from script import get_year_ending
+
+def get_year_ending(number):
+    number = number % 100
+    if 21 > number > 4:
+        return 'лет'
+
+    number = number % 10
+
+    if number == 1:
+        return 'год'
+    if 1 < number < 5:
+        return 'года'
+    return 'лет'
 
 
 def main():
@@ -20,7 +33,11 @@ def main():
     start_date = date(1920, 1, 1)
     delta = relativedelta(now, start_date)
 
-    excel_data_df = pandas.read_excel('wines_table.xlsx', sheet_name='Лист1', keep_default_na=False)
+    parser = argparse.ArgumentParser(description='Load products list to server')
+    parser.add_argument('filename', type=str, help='Specify path to the file')
+    parser.add_argument('listname', type=str, help='Specify page of excel file')
+    args = parser.parse_args()
+    excel_data_df = pandas.read_excel(args.filename, sheet_name=args.listname, keep_default_na=False)
     wines = excel_data_df.to_dict(orient='records')
     wines_by_cat = {}
 
